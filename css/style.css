@@ -37,3 +37,30 @@ footer {
     color: white;
     margin-top: 20px;
 }
+/* Секция с проектами */
+.projects {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Контейнер, который включает Flexbox - именно он располагает карточки в ряд */
+.projects-container {
+    display: flex;              /* Включаем Flexbox */
+    justify-content: center;    /* Выравниваем карточки по центру */
+    gap: 20px;                  /* Расстояние между карточками */
+    flex-wrap: wrap;            /* Если не влезают — переносим на новую строку */
+}
+
+/* Одна карточка проекта */
+.project-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);  /* Лёгкий эффект при наведении */
+}
