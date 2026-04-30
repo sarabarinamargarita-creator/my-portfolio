@@ -64,3 +64,16 @@ footer {
 .project-card:hover {
     transform: translateY(-5px);  /* Лёгкий эффект при наведении */
 }
+.details-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.details-btn:hover {
+    background-color: #333;
+}
