@@ -91,5 +91,11 @@
         const displayElement = document.getElementById('last-project-text');
         displayElement.textContent = savedProject;
     }
+        const resetBtn = document.getElementById('reset-btn');
+resetBtn.addEventListener('click', function() {
+    localStorage.removeItem('lastSelectedProject');
+    document.getElementById('last-project-text').textContent = 'Пока ничего не выбрано';
+    alert('Сохранённый проект удалён!');
+});
 </script>
     </html>
