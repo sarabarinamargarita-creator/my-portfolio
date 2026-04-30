@@ -54,24 +54,41 @@
         </footer>
     </body>
     <script>
+    // Функция для обновления текста на странице и сохранения в localStorage
+    function updateLastSelected(projectTitle) {
+        // 1. Обновляем текст на странице
+        const displayElement = document.getElementById('last-project-text');
+        displayElement.textContent = projectTitle;
+        
+        // 2. Сохраняем в localStorage
+        localStorage.setItem('lastSelectedProject', projectTitle);
+    }
+
     // 1. Находим все кнопки с классом .details-btn
     const buttons = document.querySelectorAll('.details-btn');
 
-    // 2. Для каждой кнопки...
+    // 2. Для каждой кнопки назначаем обработчик клика
     for (let i = 0; i < buttons.length; i++) {
         const button = buttons[i];
         
-        // 3. ...назначаем обработчик клика
         button.addEventListener('click', function() {
-            // 4. Находим родительскую карточку этой кнопки
+            // Находим родительскую карточку и заголовок проекта
             const card = button.closest('.project-card');
+            const title = card.querySelector('h3').innerText;
             
-            // 5. Внутри карточки находим заголовок проекта
-           const title = card.querySelector('h3').innerText;
+            // Показываем всплывающее окно (можно оставить или убрать)
+            alert('Вы выбрали проект: ' + title);
             
-            // 6. Показываем всплывающее сообщение
-           alert('Проект "' + title + '" появится в моём портфолио в ближайшее время!');
+            // СОХРАНЯЕМ ВЫБРАННЫЙ ПРОЕКТ
+            updateLastSelected(title);
         });
+    }
+
+    // 3. ВОССТАНАВЛИВАЕМ сохранённый проект при загрузке страницы
+    const savedProject = localStorage.getItem('lastSelectedProject');
+    if (savedProject) {
+        const displayElement = document.getElementById('last-project-text');
+        displayElement.textContent = savedProject;
     }
 </script>
     </html>
