@@ -50,4 +50,25 @@
             <p>© 2026 Мое портфолио</p>
         </footer>
     </body>
+    <script>
+    // 1. Находим все кнопки с классом .details-btn
+    const buttons = document.querySelectorAll('.details-btn');
+
+    // 2. Для каждой кнопки...
+    for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i];
+        
+        // 3. ...назначаем обработчик клика
+        button.addEventListener('click', function() {
+            // 4. Находим родительскую карточку этой кнопки
+            const card = button.closest('.project-card');
+            
+            // 5. Внутри карточки находим заголовок проекта
+            const title = card.querySelector('h3').innerText;
+            
+            // 6. Показываем всплывающее сообщение
+            alert('Вы выбрали проект: ' + title);
+        });
+    }
+</script>
     </html>
