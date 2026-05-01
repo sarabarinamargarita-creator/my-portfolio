@@ -31,20 +31,34 @@
                     <h3>Скоро здесь появится проект</h3>
                     <p>Интерактивный магазин на чистом JS</p>
                     <button class="details-btn">Подробнее</button>
+                    <span class="price">Цена: 500 руб.</span>
                 </div>
                 <div class="project-card">
                     <h3>ToDo-лист</h3>
                     <p>Менеджер задач с фильтрами и сохранением</p>
                     <button class="details-btn">Подробнее</button>
+                    <span class="price">Цена: 800 руб.</span>
                 </div>
                 <div class="project-card">
                     <h3>React-приложение</h3>
                     <p>ToDo-лист на React с хуками</p>
                     <button class="details-btn">Подробнее</button>
+                    <span class="price">Цена: 1200 руб.</span>
                 </div>
             </div>
         </section>
-
+        <section class="cart">
+    <h2>Корзина</h2>
+    <div id="cart-items"></div>
+    <p>Общая сумма: <span id="total-price">0</span> руб.</p>
+</section>
+<section class="cart">
+    <h2>🛒 Корзина</h2>
+    <div id="cart-items">
+        <!-- Сюда будут добавляться товары -->
+    </div>
+    <p><strong>Общая сумма:</strong> <span id="total-price">0</span> руб.</p>
+</section>
         <section class="last-selected">
             <h2>Последний выбранный проект</h2>
             <p id="last-project-text">Пока ничего не выбрано</p>
@@ -63,43 +77,83 @@
         <p>© 2026 Моё портфолио</p>
     </footer>
 
-    <script>
-        // Функция для обновления текста на странице и сохранения в localStorage
-        function updateLastSelected(projectTitle) {
-            const displayElement = document.getElementById('last-project-text');
-            displayElement.textContent = projectTitle;
-            localStorage.setItem('lastSelectedProject', projectTitle);
-        }
+  <script>
+    // ========== КОРЗИНА ==========
+    // Массив для хранения товаров (каждый товар - объект)
+    let cart = [];
 
-        // 1. Находим все кнопки с классом .details-btn
-        const buttons = document.querySelectorAll('.details-btn');
+    // Функция для добавления товара в корзину
+    function addToCart(projectName, projectPrice) {
+        // Добавляем новый объект в массив cart
+        cart.push({
+            name: projectName,
+            price: projectPrice
+        });
+        
+        // Обновляем отображение корзины на экране
+        updateCartDisplay();
+    }
 
-        // 2. Для каждой кнопки назначаем обработчик клика
-        for (let i = 0; i < buttons.length; i++) {
-            const button = buttons[i];
-            button.addEventListener('click', function() {
-                const card = button.closest('.project-card');
-                const title = card.querySelector('h3').innerText;
-                alert('Вы выбрали проект: ' + title);
-                updateLastSelected(title);
-            });
+    // Функция для отображения корзины
+    function updateCartDisplay() {
+        // Находим контейнер, где будет список товаров
+        const cartItemsDiv = document.getElementById('cart-items');
+        
+        // Очищаем контейнер (чтобы не было дублей)
+        cartItemsDiv.innerHTML = '';
+        
+        // Переменная для общей суммы
+        let total = 0;
+        
+        // Проходим по всем товарам в корзине
+        for (let i = 0; i < cart.length; i++) {
+            const item = cart[i];
+            
+            // Создаём новый элемент <p> для каждого товара
+            const itemElement = document.createElement('p');
+            itemElement.textContent = item.name + ' — ' + item.price + ' руб.';
+            
+            // Добавляем этот <p> в контейнер корзины
+            cartItemsDiv.appendChild(itemElement);
+            
+            // Прибавляем цену к общей сумме
+            total = total + item.price;
         }
+        
+        // Обновляем общую сумму на странице
+        const totalSpan = document.getElementById('total-price');
+        totalSpan.textContent = total;
+    }
 
-        // 3. Восстанавливаем сохранённый проект при загрузке страницы
-        const savedProject = localStorage.getItem('lastSelectedProject');
-        if (savedProject) {
-            const displayElement = document.getElementById('last-project-text');
-            displayElement.textContent = savedProject;
-        }
+    // ========== КНОПКИ ПРОЕКТОВ ==========
+    // Находим все кнопки с классом .details-btn
+    const buttons = document.querySelectorAll('.details-btn');
 
-        // 4. Кнопка сброса выбора
-        const resetBtn = document.getElementById('reset-btn');
-        if (resetBtn) {
-            resetBtn.addEventListener('click', function() {
-                localStorage.removeItem('lastSelectedProject');
-                document.getElementById('last-project-text').textContent = 'Пока ничего не выбрано';
-                alert('Сохранённый проект удалён!');
-            });
-        }
-    </script>
+    // Для каждой кнопки назначаем обработчик клика
+    for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i];
+        
+        button.addEventListener('click', function() {
+            // Находим родительскую карточку проекта
+            const card = button.closest('.project-card');
+            
+            // Находим название проекта (тег h3)
+            const title = card.querySelector('h3').innerText;
+            
+            // Находим цену проекта (тег .price)
+            const priceElement = card.querySelector('.price');
+            let price = 0;
+            if (priceElement) {
+                // Берём число из текста, например "500 руб." → 500
+                price = parseInt(priceElement.innerText);
+            }
+            
+            // Добавляем товар в корзину
+            addToCart(title, price);
+            
+            // Показываем всплывающее окно (можно оставить или убрать)
+            alert('Товар "' + title + '" добавлен в корзину за ' + price + ' руб.');
+        });
+    }
+</script>
 </body>
