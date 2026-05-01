@@ -89,3 +89,19 @@ footer {
     font-weight: bold;
     color: #4a90e2;
 }
+.contacts {
+    background-color: #eef2f7;
+    padding: 20px;
+    text-align: center;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.contacts a {
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+.contacts a:hover {
+    text-decoration: underline;
+}
