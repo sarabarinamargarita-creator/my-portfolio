@@ -105,3 +105,22 @@ footer {
 .contacts a:hover {
     text-decoration: underline;
 }
+.cart {
+    background-color: #fff8e7;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    border: 1px solid #ffd966;
+}
+
+#cart-items {
+    min-height: 50px;
+    margin-bottom: 10px;
+}
+
+#cart-items p {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
