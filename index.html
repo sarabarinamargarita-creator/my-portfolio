@@ -9,104 +9,97 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <header>
-            <h1>Мое портофолио</h1>
-            <nav>
-                <a href="#">Главная</a>
-                <a href="#">Проекты</a>
-                <a href="#">Контакты</a>
-            </nav>
-        </header>
+    <header>
+        <h1>Моё портфолио</h1>
+        <nav>
+            <a href="#">Главная</a>
+            <a href="#">Проекты</a>
+            <a href="#">Контакты</a>
+        </nav>
+    </header>
 
-        <main>
-            <section class="hero">
-                <H2>Привет! Я начинающий фронтенд-разработчик</H2>
-                <p>Ищу стажировку и создаю свои первые проекты.</p>
-            </section>
+    <main>
+        <section class="hero">
+            <h2>Привет! Я начинающий фронтенд-разработчик</h2>
+            <p>Ищу стажировку и создаю свои первые проекты.</p>
+        </section>
 
-            <section class="projects">
-    <h2>Мои проекты</h2>
-    <div class="projects-container">
-        <div class="project-card">
-            <h3>Скоро здесь появится проект</h3>
-            <p>Интерактивный магазин на чистом JS</p>
-            <button class="details-btn">Подробнее</button>
-        </div>
-        <div class="project-card">
-            <h3>ToDo-лист</h3>
-            <p>Менеджер задач с фильтрами и сохранением</p>
-            <button class="details-btn">Подробнее</button>
-        </div>
-        <div class="project-card">
-            <h3>React-приложение</h3>
-            <p>ToDo-лист на React с хуками</p>
-            <button class="details-btn">Подробнее</button>
-        </div>
+        <section class="projects">
+            <h2>Мои проекты</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <h3>Скоро здесь появится проект</h3>
+                    <p>Интерактивный магазин на чистом JS</p>
+                    <button class="details-btn">Подробнее</button>
+                </div>
+                <div class="project-card">
+                    <h3>ToDo-лист</h3>
+                    <p>Менеджер задач с фильтрами и сохранением</p>
+                    <button class="details-btn">Подробнее</button>
+                </div>
+                <div class="project-card">
+                    <h3>React-приложение</h3>
+                    <p>ToDo-лист на React с хуками</p>
+                    <button class="details-btn">Подробнее</button>
+                </div>
+            </div>
+        </section>
+
         <section class="last-selected">
-    <h2>Последний выбранный проект</h2>
-    <p id="last-project-text">Пока ничего не выбрано</p>
-         
-    </div>
-<section class="contacts">
-    <h2>Контакты</h2>
-    <p>📧 Email: sarabarinamargarita@gmail.com</p>
-    <p>🐙 GitHub: <a href="https://github.com/sarabarinamargarita-creator" target="_blank">sarabarinamargarita-creator</a></p>
-    <p>💬 Telegram: <a href="https://t.me/ target="_blank">@p_margarita_p</a></p>
-</section>
-</section>
-            
-        </main>
-        
+            <h2>Последний выбранный проект</h2>
+            <p id="last-project-text">Пока ничего не выбрано</p>
+            <button id="reset-btn">Сбросить выбор</button>
+        </section>
 
-        
-        <footer>
-            <p>© 2026 Мое портфолио</p>
-        </footer>
-    </body>
+        <section class="contacts">
+            <h2>Контакты</h2>
+            <p>📧 Email: sarabarinamargarita@gmail.com</p>
+            <p>🐙 GitHub: <a href="https://github.com/sarabarinamargarita-creator" target="_blank">sarabarinamargarita-creator</a></p>
+            <p>💬 Telegram: <a href="https://t.me/p_margarita_p" target="_blank">@p_margarita_p</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Моё портфолио</p>
+    </footer>
+
     <script>
-    // Функция для обновления текста на странице и сохранения в localStorage
-    function updateLastSelected(projectTitle) {
-        // 1. Обновляем текст на странице
-        const displayElement = document.getElementById('last-project-text');
-        displayElement.textContent = projectTitle;
-        
-        // 2. Сохраняем в localStorage
-        localStorage.setItem('lastSelectedProject', projectTitle);
-    }
+        // Функция для обновления текста на странице и сохранения в localStorage
+        function updateLastSelected(projectTitle) {
+            const displayElement = document.getElementById('last-project-text');
+            displayElement.textContent = projectTitle;
+            localStorage.setItem('lastSelectedProject', projectTitle);
+        }
 
-    // 1. Находим все кнопки с классом .details-btn
-    const buttons = document.querySelectorAll('.details-btn');
+        // 1. Находим все кнопки с классом .details-btn
+        const buttons = document.querySelectorAll('.details-btn');
 
-    // 2. Для каждой кнопки назначаем обработчик клика
-    for (let i = 0; i < buttons.length; i++) {
-        const button = buttons[i];
-        
-        button.addEventListener('click', function() {
-            // Находим родительскую карточку и заголовок проекта
-            const card = button.closest('.project-card');
-            const title = card.querySelector('h3').innerText;
-            
-            // Показываем всплывающее окно (можно оставить или убрать)
-            alert('Вы выбрали проект: ' + title);
-            
-            const resetBtn = document.getElementById('reset-btn');
-resetBtn.addEventListener('click', function() {
-    localStorage.removeItem('lastSelectedProject');
-    document.getElementById('last-project-text').textContent = 'Пока ничего не выбрано';
-    alert('Сохранённый проект удалён!');
-});
-            
-            // СОХРАНЯЕМ ВЫБРАННЫЙ ПРОЕКТ
-            updateLastSelected(title);
-        });
-    }
+        // 2. Для каждой кнопки назначаем обработчик клика
+        for (let i = 0; i < buttons.length; i++) {
+            const button = buttons[i];
+            button.addEventListener('click', function() {
+                const card = button.closest('.project-card');
+                const title = card.querySelector('h3').innerText;
+                alert('Вы выбрали проект: ' + title);
+                updateLastSelected(title);
+            });
+        }
 
-    // 3. ВОССТАНАВЛИВАЕМ сохранённый проект при загрузке страницы
-    const savedProject = localStorage.getItem('lastSelectedProject');
-    if (savedProject) {
-        const displayElement = document.getElementById('last-project-text');
-        displayElement.textContent = savedProject;
-    }
-        
-</script>
-    </html>
+        // 3. Восстанавливаем сохранённый проект при загрузке страницы
+        const savedProject = localStorage.getItem('lastSelectedProject');
+        if (savedProject) {
+            const displayElement = document.getElementById('last-project-text');
+            displayElement.textContent = savedProject;
+        }
+
+        // 4. Кнопка сброса выбора
+        const resetBtn = document.getElementById('reset-btn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                localStorage.removeItem('lastSelectedProject');
+                document.getElementById('last-project-text').textContent = 'Пока ничего не выбрано';
+                alert('Сохранённый проект удалён!');
+            });
+        }
+    </script>
+</body>
