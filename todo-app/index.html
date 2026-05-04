@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo-лист | Менеджер задач</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .todo-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #taskInput {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #taskInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #addBtn {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        #addBtn:hover {
+            background: #5a67d8;
+            transform: scale(1.02);
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .task-item:hover {
+            transform: translateX(5px);
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>📝 Мои задачи</h1>
+        
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Что нужно сделать?">
+            <button id="addBtn">➕ Добавить</button>
+        </div>
+
+        <ul class="task-list" id="taskList">
+            <li class="empty-message">Пока нет задач. Добавьте первую!</li>
+        </ul>
+    </div>
+
+    <script>
+       // ========== ДАННЫЕ ==========
+let tasks = []; // Массив для хранения задач
+
+// ========== ФУНКЦИЯ ДЛЯ СОХРАНЕНИЯ ==========
+function saveTasks() {
+    localStorage.setItem('todoTasks', JSON.stringify(tasks));
+}
+
+// ========== ФУНКЦИЯ ДЛЯ ЗАГРУЗКИ ==========
+function loadTasks() {
+    const saved = localStorage.getItem('todoTasks');
+    if (saved) {
+        tasks = JSON.parse(saved);
+    }
+}
+
+// ========== ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ==========
+function renderTasks() {
+    const taskList = document.getElementById('taskList');
+    taskList.innerHTML = ''; // Очищаем список
+    
+    if (tasks.length === 0) {
+        taskList.innerHTML = '<li class="empty-message">✨ Пока нет задач. Добавьте первую!</li>';
+        return;
+    }
+    
+    // Проходим по всем задачам и создаём элементы
+    for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+        
+        // Создаём элемент списка
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        
+        // Создаём контейнер для текста
+        const taskText = document.createElement('span');
+        taskText.className = 'task-text';
+        if (task.completed) {
+            taskText.classList.add('completed');
+        }
+        taskText.textContent = task.text;
+        
+        // Добавляем возможность отметить выполненным (клик по тексту)
+        taskText.addEventListener('click', function() {
+            tasks[i].completed = !tasks[i].completed;
+            saveTasks();
+            renderTasks();
+        });
+        
+        // Создаём кнопку удаления
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '🗑 Удалить';
+        deleteBtn.className = 'delete-btn';
+        
+        // Назначаем удаление
+        deleteBtn.addEventListener('click', function() {
+            tasks.splice(i, 1); // Удаляем задачу из массива
+            saveTasks();
+            renderTasks();
+        });
+        
+        // Собираем всё в один элемент
+        li.appendChild(taskText);
+        li.appendChild(deleteBtn);
+        taskList.appendChild(li);
+    }
+}
+
+// ========== ФУНКЦИЯ ДЛЯ ДОБАВЛЕНИЯ ==========
+function addTask() {
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+    
+    if (text === '') {
+        alert('Введите текст задачи!');
+        return;
+    }
+    
+    // Добавляем новую задачу в массив
+    tasks.push({
+        text: text,
+        completed: false
+    });
+    
+    // Очищаем поле ввода
+    input.value = '';
+    
+    // Сохраняем и перерисовываем
+    saveTasks();
+    renderTasks();
+}
+
+// ========== НАСТРАИВАЕМ ОБРАБОТЧИКИ ==========
+const addBtn = document.getElementById('addBtn');
+addBtn.addEventListener('click', addTask);
+
+// Добавление по клавише Enter
+const taskInput = document.getElementById('taskInput');
+taskInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        addTask();
+    }
+});
+
+// ========== ЗАГРУЖАЕМ ЗАДАЧИ ПРИ СТАРТЕ ==========
+loadTasks();
+renderTasks();
+    </script>
+</body>
+</html>
