@@ -77,99 +77,69 @@
 
   <script>
     // ========== КОРЗИНА ==========
-    // Массив для хранения товаров (каждый товар - объект)
     let cart = [];
 
-    // Функция для добавления товара в корзину
     function addToCart(projectName, projectPrice) {
-        // Добавляем новый объект в массив cart
-        cart.push({
-            name: projectName,
-            price: projectPrice
-        });
-        
-        // Обновляем отображение корзины на экране
+        cart.push({ name: projectName, price: projectPrice });
         updateCartDisplay();
     }
 
-    // Функция для отображения корзины
     function updateCartDisplay() {
-        // Находим контейнер, где будет список товаров
         const cartItemsDiv = document.getElementById('cart-items');
+        if (!cartItemsDiv) return;
         
-        // Очищаем контейнер (чтобы не было дублей)
         cartItemsDiv.innerHTML = '';
-        
-        // Переменная для общей суммы
         let total = 0;
         
-        // Проходим по всем товарам в корзине
         for (let i = 0; i < cart.length; i++) {
             const item = cart[i];
-            
-            // Создаём новый элемент <p> для каждого товара
             const itemElement = document.createElement('p');
             itemElement.textContent = item.name + ' — ' + item.price + ' руб.';
-            
-            // Добавляем этот <p> в контейнер корзины
             cartItemsDiv.appendChild(itemElement);
-            
-            // Прибавляем цену к общей сумме
             total = total + item.price;
         }
         
-        // Обновляем общую сумму на странице
         const totalSpan = document.getElementById('total-price');
-        totalSpan.textContent = total;
+        if (totalSpan) totalSpan.textContent = total;
     }
 
     // ========== КНОПКИ ПРОЕКТОВ ==========
-    // Находим все кнопки с классом .details-btn
     const buttons = document.querySelectorAll('.details-btn');
-
-    // Для каждой кнопки назначаем обработчик клика
     for (let i = 0; i < buttons.length; i++) {
         const button = buttons[i];
-        
         button.addEventListener('click', function() {
-            // Находим родительскую карточку проекта
             const card = button.closest('.project-card');
-            
-            // Находим название проекта (тег h3)
             const title = card.querySelector('h3').innerText;
-            
-            // Находим цену проекта (тег .price)
             const priceElement = card.querySelector('.price');
-            let price = 0;
-            if (priceElement) {
-                // Берём число из текста, например "500 руб." → 500
-                price = parseInt(priceElement.innerText);
-            }
+            let price = priceElement ? parseInt(priceElement.innerText) : 0;
             
-            // Добавляем товар в корзину
             addToCart(title, price);
-            
-            // Показываем всплывающее окно (можно оставить или убрать)
             alert('Товар "' + title + '" добавлен в корзину за ' + price + ' руб.');
         });
     }
-      // ========== КНОПКА СБРОСА ==========
-const resetBtn = document.getElementById('reset-btn');
-if (resetBtn) {
-    resetBtn.addEventListener('click', function() {
-        // Очищаем корзину
-        cart = [];
-        updateCartDisplay();
-        
-        // Очищаем последний выбранный проект
-        localStorage.removeItem('lastSelectedProject');
+
+    // ========== КНОПКА СБРОСА ==========
+    const resetBtn = document.getElementById('reset-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            cart = [];
+            updateCartDisplay();
+            
+            localStorage.removeItem('lastSelectedProject');
+            const displayElement = document.getElementById('last-project-text');
+            if (displayElement) {
+                displayElement.textContent = 'Пока ничего не выбрано';
+            }
+            
+            alert('Корзина и выбранный проект очищены');
+        });
+    }
+
+    // ========== ВОССТАНОВЛЕНИЕ ПОСЛЕДНЕГО ПРОЕКТА ==========
+    const savedProject = localStorage.getItem('lastSelectedProject');
+    if (savedProject) {
         const displayElement = document.getElementById('last-project-text');
-        if (displayElement) {
-            displayElement.textContent = 'Пока ничего не выбрано';
-        }
-        
-        alert('Корзина и выбранный проект очищены');
-    });
-}
+        if (displayElement) displayElement.textContent = savedProject;
+    }
 </script>
 </body>
