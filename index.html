@@ -40,7 +40,7 @@
                     <a href="todo-app/index.html" target="_blank" class="project-link">
                     <i class="fas fa-arrow-right"></i> Перейти
                     </a>
-                    <span class="price" style="visibility: hidden;">0</span> руб.
+                    <span class="price" style="visibility: hidden;">700</span> руб.
 </div>
                 <div class="project-card">
                     <h3>React-приложение</h3>
@@ -153,5 +153,23 @@
             alert('Товар "' + title + '" добавлен в корзину за ' + price + ' руб.');
         });
     }
+      // ========== КНОПКА СБРОСА ==========
+const resetBtn = document.getElementById('reset-btn');
+if (resetBtn) {
+    resetBtn.addEventListener('click', function() {
+        // Очищаем корзину
+        cart = [];
+        updateCartDisplay();
+        
+        // Очищаем последний выбранный проект
+        localStorage.removeItem('lastSelectedProject');
+        const displayElement = document.getElementById('last-project-text');
+        if (displayElement) {
+            displayElement.textContent = 'Пока ничего не выбрано';
+        }
+        
+        alert('Корзина и выбранный проект очищены');
+    });
+}
 </script>
 </body>
