@@ -157,4 +157,7 @@ footer {
 .project-card .project-link {
     margin-top: auto;
 }
+.project-card {
+    min-height: 280px;
+}
 
