@@ -65,6 +65,20 @@
             transition: transform 0.1s, box-shadow 0.2s;
             font-weight: 600;
         }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+}
+
+        .zero {
+            grid-column: span 2;
+}
+
+        .equals {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+}
 
         button:active {
             transform: scale(0.97);
