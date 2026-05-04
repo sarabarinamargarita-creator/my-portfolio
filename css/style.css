@@ -51,6 +51,10 @@ nav a:hover { text-decoration: underline; }
     width: 250px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .project-card:hover { transform: translateY(-5px); }
 
@@ -142,15 +146,4 @@ footer {
     background-color: #333;
     color: white;
     margin-top: 20px;
-}
-project-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 250px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-    display: flex;           /* 👈 НОВАЯ СТРОЧКА */
-    flex-direction: column;  /* 👈 НОВАЯ СТРОЧКА */
-    justify-content: space-between; /* 👈 НОВАЯ СТРОЧКА */
 }
