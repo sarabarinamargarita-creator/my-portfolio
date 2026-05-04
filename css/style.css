@@ -147,3 +147,6 @@ footer {
     color: white;
     margin-top: 20px;
 }
+.project-card .project-link {
+    margin-top: auto;
+}
