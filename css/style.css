@@ -1,57 +1,49 @@
 body {
     font-family: 'Inter', Arial, sans-serif;
+    font-weight: 300;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
     color: #333;
 }
 
+/* ШАПКА */
 header {
-    background-color: #4a90e2;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 20px;
     text-align: center;
 }
-
-header h1 {
-    margin: 0;
-
+header h1 { margin: 0; }
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 400;
 }
+nav a:hover { text-decoration: underline; }
 
-nav a:hover {
-    text-decoration: underline;
-}
-
+/* ГЛАВНЫЙ БЛОК */
 .hero {
     text-align: center;
     padding: 50px 20px;
     background-color: white;
     margin: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #333;
-    color: white;
-    margin-top: 20px;
-}
-/* Секция с проектами */
+
+/* ПРОЕКТЫ (Flexbox) */
 .projects {
     padding: 20px;
     text-align: center;
 }
-
-/* Контейнер, который включает Flexbox - именно он располагает карточки в ряд */
 .projects-container {
-    display: flex;              /* Включаем Flexbox */
-    justify-content: center;    /* Выравниваем карточки по центру */
-    gap: 20px;                  /* Расстояние между карточками */
-    flex-wrap: wrap;            /* Если не влезают — переносим на новую строку */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
-
-/* Одна карточка проекта */
 .project-card {
     background-color: white;
     border-radius: 10px;
@@ -60,12 +52,49 @@ footer {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s;
 }
+.project-card:hover { transform: translateY(-5px); }
 
-.project-card:hover {
-    transform: translateY(-5px);  /* Лёгкий эффект при наведении */
+/* СТИЛИ ДЛЯ КНОПОК И ССЫЛОК В КАРТОЧКАХ (ДЕЛАЕМ ИХ ОДИНАКОВЫМИ) */
+.details-btn, .project-link {
+    display: inline-block;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-.details-btn {
-    background-color: #4a90e2;
+.details-btn:hover, .project-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* ЦЕНЫ */
+.price {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: bold;
+    color: #4a90e2;
+}
+
+/* БЛОК ПОСЛЕДНЕГО ВЫБРАННОГО ПРОЕКТА */
+.last-selected {
+    background-color: #eef2f7;
+    padding: 20px;
+    text-align: center;
+    margin: 20px;
+    border-radius: 10px;
+}
+#last-project-text {
+    font-weight: bold;
+    color: #4a90e2;
+}
+#reset-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
     padding: 8px 16px;
@@ -74,21 +103,7 @@ footer {
     margin-top: 10px;
 }
 
-.details-btn:hover {
-    background-color: #333;
-}
-.last-selected {
-    background-color: #eef2f7;
-    padding: 20px;
-    text-align: center;
-    margin: 20px;
-    border-radius: 10px;
-}
-
-#last-project-text {
-    font-weight: bold;
-    color: #4a90e2;
-}
+/* БЛОК КОНТАКТОВ */
 .contacts {
     background-color: #eef2f7;
     padding: 20px;
@@ -96,15 +111,15 @@ footer {
     margin: 20px;
     border-radius: 10px;
 }
-
 .contacts a {
     color: #4a90e2;
     text-decoration: none;
+    background: none;
+    padding: 0;
 }
+.contacts a:hover { text-decoration: underline; }
 
-.contacts a:hover {
-    text-decoration: underline;
-}
+/* БЛОК КОРЗИНЫ */
 .cart {
     background-color: #fff8e7;
     padding: 20px;
@@ -112,30 +127,19 @@ footer {
     border-radius: 10px;
     border: 1px solid #ffd966;
 }
-
-#cart-items {
-    min-height: 50px;
-    margin-bottom: 10px;
-}
-
+#cart-items { min-height: 50px; margin-bottom: 10px; }
 #cart-items p {
     margin: 5px 0;
     padding: 5px;
     background-color: #f0f0f0;
     border-radius: 5px;
 }
-/* Вместо плоского синего сделаем градиент для шапки */
-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
 
-/* Для кнопок - тот же градиент */
-.details-btn, .cart button, .contacts a {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.details-btn:hover, .cart button:hover, .contacts a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+/* ПОДВАЛ */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
 }
