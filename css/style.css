@@ -54,7 +54,14 @@ nav a:hover { text-decoration: underline; }
     
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    height: 100%;           /* 👈 ФИКСИРУЕМ ВЫСОТУ */
+}
+
+/* ВСЕ кнопки и ссылки внутри карточки прижимаем к низу */
+.project-card .details-btn,
+.project-card .project-link {
+    margin-top: auto;
+    align-self: flex-start; /* Чтобы не растягивались на всю ширину */
 }
 .project-card:hover { transform: translateY(-5px); }
 
