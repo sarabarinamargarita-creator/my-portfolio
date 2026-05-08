@@ -25,59 +25,60 @@
             <p>Ищу стажировку и создаю свои первые проекты.</p>
         </section>
 
-        <section class="projects">
-            <h2>Мои проекты</h2>
-            <div class="projects-container">
-                <div class="project-card">
-                    <h3>Скоро здесь появится проект</h3>
-                    <p>Интерактивный магазин на чистом JS</p>
-                    <button class="details-btn"><i class="fas fa-shopping-cart"></i> Подробнее</button>
-                    <span class="price">500</span> руб.
-                </div>
-                <div class="project-card">
-                    <h3><i class="fas fa-check-square"></i> ToDo-лист</h3>
-                    <p>Менеджер задач с сохранением</p>
-                    <a href="todo-app/index.html" target="_blank" class="project-link">
+         <section class="projects">
+        <h2>Мои проекты</h2>
+        <div class="projects-container">
+            <div class="project-card">
+                <h3><i class="fas fa-check-square"></i> ToDo-лист (JS)</h3>
+                <p>Менеджер задач с сохранением в localStorage</p>
+                <a href="todo-app/index.html" target="_blank" class="project-link">
                     <i class="fas fa-arrow-right"></i> Перейти
-                    </a>
-                    <span class="price" style="visibility: hidden;">0</span> руб.
-</div>
-                <div class="project-card">
-                    <h3><i class="fab fa-react"></i> React-приложение</h3>
-                    <p>ToDo-лист на React с хуками</p>
-                    <button class="details-btn"><i class="fas fa-shopping-cart"></i> Подробнее</button>
-                    <span class="price">1200</span> руб.
-</div>
-                <div class="project-card">
-                    <h3><i class="fas fa-calculator"></i> Калькулятор</h3>
-                    <p>Арифметические операции, клавиатура</p>
-                    <a href="calculator-app/index.html" target="_blank" class="project-link">
-                    <i class="fas fa-arrow-right"></i> Перейти
-                    </a>
-                    <span class="price" style="visibility: hidden;">0</span> руб.
-</div>
-                <div class="project-card">
-                    <h3><i class="fab fa-react"></i> ToDo-лист на React</h3>
-                    <p>Менеджер задач с сохранением в localStorage</p>
-                    <a href="https://sarabarinamargarita-creator.github.io/react-todo/" target="_blank" class="project-link">
-                    <i class="fas fa-arrow-right"></i> Посмотреть
-                    </a>
-                    <span class="price" style="visibility: hidden;">0</span> руб.
-</div>
+                </a>
             </div>
-        </section>
-<section class="cart">
-    <h2>🛒 Корзина</h2>
-    <div id="cart-items">
-        <!-- Сюда будут добавляться товары -->
-    </div>
-    <p><strong>Общая сумма:</strong> <span id="total-price">0</span> руб.</p>
-</section>
-        <section class="last-selected">
-            <h2>Последний выбранный проект</h2>
-            <p id="last-project-text">Пока ничего не выбрано</p>
-            <button id="reset-btn">Сбросить выбор</button>
-        </section>
+            <div class="project-card">
+                <h3><i class="fas fa-calculator"></i> Калькулятор</h3>
+                <p>Арифметические операции, поддержка клавиатуры</p>
+                <a href="calculator-app/index.html" target="_blank" class="project-link">
+                    <i class="fas fa-arrow-right"></i> Перейти
+                </a>
+            </div>
+            <div class="project-card">
+                <h3><i class="fab fa-react"></i> ToDo-лист на React</h3>
+                <p>Сохранение в localStorage, деплой на GitHub Pages</p>
+                <a href="https://sarabarinamargarita-creator.github.io/react-todo/" target="_blank" class="project-link">
+                    <i class="fas fa-arrow-right"></i> Посмотреть
+                </a>
+            </div>
+        </div>
+    </section>
+ <section class="demo-cart-section">
+        <h2>🛒 Демо: Корзина</h2>
+        <p>Нажмите «Купить» на любой карточке — товар добавится в корзину ниже</p>
+        <div class="projects-container">
+            <div class="demo-card">
+                <h3>📘 Учебный проект 1</h3>
+                <p>Демонстрация корзины</p>
+                <button class="demo-buy-btn" data-name="Учебный проект 1" data-price="500">Купить за 500₽</button>
+            </div>
+            <div class="demo-card">
+                <h3>📙 Учебный проект 2</h3>
+                <p>Демонстрация корзины</p>
+                <button class="demo-buy-btn" data-name="Учебный проект 2" data-price="800">Купить за 800₽</button>
+            </div>
+            <div class="demo-card">
+                <h3>📕 Учебный проект 3</h3>
+                <p>Демонстрация корзины</p>
+                <button class="demo-buy-btn" data-name="Учебный проект 3" data-price="1200">Купить за 1200₽</button>
+            </div>
+        </div>
+
+        <div class="cart-block">
+            <h3>Корзина</h3>
+            <div id="demo-cart-items"></div>
+            <p><strong>Общая сумма:</strong> <span id="demo-total-price">0</span> ₽</p>
+            <button id="demo-clear-btn">Очистить корзину</button>
+        </div>
+    </section>
 
                 <section class="contacts">
             <h2>Контакты</h2>
@@ -92,70 +93,56 @@
     </footer>
 
   <script>
-    // ========== КОРЗИНА ==========
-    let cart = [];
+    <script>
+    let demoCart = [];
 
-    function addToCart(projectName, projectPrice) {
-        cart.push({ name: projectName, price: projectPrice });
-        updateCartDisplay();
-    }
+    function updateDemoCart() {
+        const container = document.getElementById('demo-cart-items');
+        const totalSpan = document.getElementById('demo-total-price');
+        if (!container) return;
 
-    function updateCartDisplay() {
-        const cartItemsDiv = document.getElementById('cart-items');
-        if (!cartItemsDiv) return;
-        
-        cartItemsDiv.innerHTML = '';
+        container.innerHTML = '';
         let total = 0;
-        
-        for (let i = 0; i < cart.length; i++) {
-            const item = cart[i];
-            const itemElement = document.createElement('p');
-            itemElement.textContent = item.name + ' — ' + item.price + ' руб.';
-            cartItemsDiv.appendChild(itemElement);
-            total = total + item.price;
-        }
-        
-        const totalSpan = document.getElementById('total-price');
-        if (totalSpan) totalSpan.textContent = total;
-    }
 
-    // ========== КНОПКИ ПРОЕКТОВ ==========
-    const buttons = document.querySelectorAll('.details-btn');
-    for (let i = 0; i < buttons.length; i++) {
-        const button = buttons[i];
-        button.addEventListener('click', function() {
-            const card = button.closest('.project-card');
-            const title = card.querySelector('h3').innerText;
-            const priceElement = card.querySelector('.price');
-            let price = priceElement ? parseInt(priceElement.innerText) : 0;
-            
-            addToCart(title, price);
-            alert('Товар "' + title + '" добавлен в корзину за ' + price + ' руб.');
+        demoCart.forEach((item, idx) => {
+            total += item.price;
+            const p = document.createElement('p');
+            p.innerHTML = `${item.name} — ${item.price}₽ <button class="remove-item" data-index="${idx}">❌</button>`;
+            container.appendChild(p);
+        });
+
+        totalSpan.textContent = total;
+
+      
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = parseInt(btn.dataset.index);
+                demoCart.splice(idx, 1);
+                updateDemoCart();
+            });
         });
     }
 
-    // ========== КНОПКА СБРОСА ==========
-    const resetBtn = document.getElementById('reset-btn');
-    if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-            cart = [];
-            updateCartDisplay();
-            
-            localStorage.removeItem('lastSelectedProject');
-            const displayElement = document.getElementById('last-project-text');
-            if (displayElement) {
-                displayElement.textContent = 'Пока ничего не выбрано';
-            }
-            
-            alert('Корзина и выбранный проект очищены');
+   
+    document.querySelectorAll('.demo-buy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const name = btn.dataset.name;
+            const price = parseInt(btn.dataset.price);
+            demoCart.push({ name, price });
+            updateDemoCart();
+            alert(`Товар "${name}" добавлен в корзину`);
         });
-    }
+    });
 
-    // ========== ВОССТАНОВЛЕНИЕ ПОСЛЕДНЕГО ПРОЕКТА ==========
-    const savedProject = localStorage.getItem('lastSelectedProject');
-    if (savedProject) {
-        const displayElement = document.getElementById('last-project-text');
-        if (displayElement) displayElement.textContent = savedProject;
+  
+    const clearBtn = document.getElementById('demo-clear-btn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            demoCart = [];
+            updateDemoCart();
+            alert('Корзина очищена');
+        });
     }
 </script>
 </body>
+</html>
