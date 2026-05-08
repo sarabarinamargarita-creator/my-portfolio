@@ -93,7 +93,7 @@
     </footer>
 
 
-    <script>
+   <script>
     let demoCart = [];
 
     function updateDemoCart() {
@@ -113,7 +113,6 @@
 
         totalSpan.textContent = total;
 
-      
         document.querySelectorAll('.remove-item').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = parseInt(btn.dataset.index);
@@ -123,19 +122,22 @@
         });
     }
 
-   
-    document.querySelectorAll('.demo-buy-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const name = btn.dataset.name;
-            const price = parseInt(btn.dataset.price);
-            demoCart.push({ name, price });
-            updateDemoCart();
-            alert(`Товар "${name}" добавлен в корзину`);
-        });
+    // ========== ВАЖНО: теперь ищем кнопки с классом btn-modern, у которых есть data-name ==========
+    document.querySelectorAll('.btn-modern').forEach(btn => {
+        // Проверяем, что у кнопки есть атрибут data-name (это кнопки "Купить")
+        if (btn.hasAttribute('data-name')) {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name;
+                const price = parseInt(btn.dataset.price);
+                demoCart.push({ name, price });
+                updateDemoCart();
+                alert(`Товар "${name}" добавлен в корзину`);
+            });
+        }
     });
 
-  
-    const clearBtn = document.getElementById('demo-clear-btn');
+    // Кнопка очистки корзины
+    const clearBtn = document.getElementById('reset-btn');
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             demoCart = [];
